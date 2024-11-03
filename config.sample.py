@@ -8,6 +8,150 @@ openai_key = "c1..."
 promptflow_endpoint = "https://......swedencentral.inference.ml.azure.com/score"
 promptflow_deployment = "tv-copilot-3"
 promptflow_key = "bh...."
+
+copilots = [
+   {
+            "id": "tvcopilot",
+            "name": "TV Copilot",
+            "description": "Ask questions about TV shows, movies, actors, and more!",
+            "icon": "📺",
+            "active": True,
+            "initialmessage": "Merhaba, bugün ne tür bir şey izlemek istersin?",
+            "sampleprompts":[
+                {"prompt": "Tom Cruise'un oynadığı komedi filmi var mı?"},
+                {"prompt": "Bahar dizisinin son bölümü bugün müydü?"},
+                {"prompt": "Bu akşam TV'de hangi diziler var?"}
+                ],
+            "system_prompt": ""
+        },
+      {
+               "id": "techcopilot",
+               "name": "Technician Copilot",
+               "description": "Ask questions about technical issues, troubleshooting, and more!",
+               "icon": "🔧",
+               "active": False,
+               "initialmessage": "Merhaba, teknik bir sorunun mu var?",
+               "sampleprompts":[
+                  {"prompt": "Bilgisayarımın ekranı siyah ekran veriyor, ne yapmalıyım?"},
+                  {"prompt": "Telefonumun şarjı çok hızlı bitiyor, neden olabilir?"},
+                  {"prompt": "Modemim internete bağlanmıyor, ne yapmalıyım?"}
+                  ],
+               "system_prompt": ""
+         },
+         {
+               "id": "chefcopilot",
+               "name": "Chef Copilot",
+               "description": "Ask questions about recipes, cooking tips, and more!",
+               "icon": "🍳",
+               "active": False,
+               "initialmessage": "Merhaba, bugün ne pişirmek istersin?",
+               "sampleprompts":[
+                  {"prompt": "Çikolatalı kek tarifi nedir?"},
+                  {"prompt": "Fırında tavuk tarifi var mı?"},
+                  {"prompt": "Makarna sosu nasıl yapılır?"}
+                  ],
+               "system_prompt": ""
+         },
+         {
+               "id": "astrologycopilot",
+               "name": "Astrology Copilot",
+               "description": "Ask questions about zodiac signs, horoscopes, and more!",
+               "icon": "♈",
+               "active": False,
+               "initialmessage": "Merhaba, burcun ne?",
+               "sampleprompts":[
+                  {"prompt": "Koç burcunu bu hafta ne bekliyor?"},
+                  {"prompt": "Yengeç burcu için günlük yorum nedir?"},
+                  {"prompt": "Oğlak ve İkizler duygusal uyum nasıl?"}
+                  ],
+               "system_prompt": ""
+         },
+         {
+               "id": "musiccopilot",
+               "name": "Music Copilot",
+               "description": "Ask questions about music, artists, and more!",
+               "icon": "🎵",
+               "active": False,
+               "initialmessage": "Merhaba, bugün hangi şarkıyı dinlemek istersin?",
+               "sampleprompts":[
+                  {"prompt": "En sevdiğin şarkıcı kim?"},
+                  {"prompt": "Bugün hangi şarkıyı dinlemek istersin?"},
+                  {"prompt": "Yeni çıkan bir albüm önerisi var mı?"}
+                  ],
+               "system_prompt": ""
+         },
+         {
+               "id": "healthcopilot",
+               "name": "Health Copilot",
+               "description": "Ask questions about health, wellness, and more!",
+               "icon": "🏥",
+               "active": False,
+               "initialmessage": "Merhaba, sağlıkla ilgili bir sorunun mu var?",
+               "sampleprompts":[
+                  {"prompt": "Kilo vermek için ne yapmalıyım?"},
+                  {"prompt": "Günlük egzersiz önerisi var mı?"},
+                  {"prompt": "Grip olduğumda ne yapmalıyım?"}
+                  ],
+               "system_prompt": ""
+         },
+         {
+               "id": "travelcopilot",
+               "name": "Travel Copilot",
+               "description": "Ask questions about travel, destinations, and more!",
+               "icon": "✈️",
+               "active": False,
+               "initialmessage": "Merhaba, nereye seyahat etmek istersin?",
+               "sampleprompts":[
+                  {"prompt": "Yaz tatili için öneri var mı?"},
+                  {"prompt": "Yurt dışına çıkmak için gereken belgeler nelerdir?"},
+                  {"prompt": "En iyi plaj tatili destinasyonu hangisidir?"}
+                  ],
+               "system_prompt": ""
+         },
+         {
+               "id": "fashioncopilot",
+               "name": "Fashion Copilot",
+               "description": "Ask questions about fashion, style, and more!",
+               "icon": "👗",
+               "active": False,
+               "initialmessage": "Merhaba, bugün ne giymek istersin?",
+               "sampleprompts":[
+                  {"prompt": "Kombin önerisi istiyorum."},
+                  {"prompt": "Yazlık elbise önerisi var mı?"},
+                  {"prompt": "Kışlık bot önerisi istiyorum."}
+                  ],
+               "system_prompt": ""
+         },
+         {
+               "id": "financecopilot",
+               "name": "Finance Copilot",
+               "description": "Ask questions about finance, investments, and more!",
+               "icon": "💰",
+               "active": False,
+               "initialmessage": "Merhaba, bugün ne tür bir yatırım yapmak istersin?",
+               "sampleprompts":[
+                  {"prompt": "Borsada hangi hisseye yatırım yapmalıyım?"},
+                  {"prompt": "Altın yatırımı hakkında bilgi verir misiniz?"},
+                  {"prompt": "Kripto para yatırımı yapmak istiyorum."}
+                  ],
+               "system_prompt": ""
+         },
+         {
+               "id": "carcopilot",
+               "name": "Car Copilot",
+               "description": "Ask questions about cars, maintenance, and more!",
+               "icon": "🚗",
+               "active": False,
+               "initialmessage": "Merhaba, aracınla ilgili bir sorun mu var?",
+               "sampleprompts":[
+                  {"prompt": "Aracımın lastiklerini değiştirmem gerekiyor mu?"},
+                  {"prompt": "Aracımın yağını ne zaman değiştirmeliyim?"},
+                  {"prompt": "Aracımın bakımını kendim yapabilir miyim?"}
+                  ],
+               "system_prompt": ""
+         }    
+]
+
 system_prompt = """
 **Prompt**:
 You are a TV chatbot conversing with a human. Your Name is TV Copilot. When the user provides information related to TV shows and movies, you should refer to the "Content" sections below to respond. If you advice films or series  from digital platforms(Netflix, Amazon Prime or BluTV, etc). you can add link for film or series and you should share link for film at the digital platform. Never answer with very long texts.
@@ -31,6 +175,10 @@ For example : you can watch the Titanic on the Netflix from this link : https://
    4. Ensure suggestions are relevant to the user’s current interests and available viewing options.
    5. Encourage users to ask for more details or follow-up recommendations for a better viewing experience.
    6. Speak symphatic and friendly and use emoji
+
+**Examples**:
+- User: Bugün akşam TV'de ne var?
+- Assistant: ATV'de akşam 8 de Safir ve ardından Tatar Ramazan var. Kanal D'de 8 de Password isimli yarışma ve ardından Arka Sokaklar dizisinin tekrarı var. TV8'de ise akşam 8:45 den gece yarısına kadar MasterChef Türkiye final bölümü var.  
 
 **Content**:
 
