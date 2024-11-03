@@ -1,0 +1,168 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required metadata tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Talk with Copilot on any various topics!">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>
+
+    <style>
+        body {
+            background: linear-gradient(0deg, #eedcb5, #eef1fe);
+            background-size: 40% 1400%;
+            font-size: large;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                margin-top: 30px;
+            }
+            to {
+                opacity: 1;
+                margin-top: 20px;
+            }
+        }
+       
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1.0;
+                
+            }
+            50% {
+                opacity: 1;
+                background-color: #f3ffc97a;
+            }
+        }
+
+
+        .ctile {
+            background: rgba(255, 255, 255, 0.781);
+            color: #007bff;
+            border: #007bff 1px solid;
+            box-shadow: 0 0 5px 0px #0000002b;
+            min-height: 80px;
+            padding: 15px 75px 15px 15px;
+            border-radius: 10px;
+            margin: 10px 0px;
+            cursor: pointer;
+            font-size: medium;
+            text-decoration: none;
+        }
+        .ctile:hover {
+            background: #0269d6;
+            color: white
+        }
+        .ctitle {
+            pointer-events: none;
+            font-size: 20px;
+            font-weight: 500;
+            text-wrap-mode: nowrap;
+        }
+        .cdesc {
+            pointer-events: none;
+            font-size: 13px;
+            color: #838080;
+            font-weight: 300;
+            height: 40px;
+            overflow: hidden;
+        }
+        .ctile:hover .cdesc {
+            color: white;
+        }
+        .cicon {
+            pointer-events: none;
+            font-size: 50px;
+            position: absolute;
+            right: 32px;
+            opacity: 0.4;
+            top: 0px;
+            bottom: 0px;
+            display: grid;
+            align-items: center;
+        }
+
+        /* make scrollbar minimal */
+        ::-webkit-scrollbar {
+            width: 7px;
+            background-color: #939393;
+            border-radius: 15px;
+        }
+
+        .form-control:focus {
+            border-color: #63636333;
+            box-shadow: none
+        }
+        
+        .top-right-bar {
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            padding: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0.5;
+            color: #838080;
+        }
+        .top-right-bar>* {
+            margin-left: 10px;
+        }
+        .inactive {
+            filter: blur(1px) grayscale(1);
+        }   
+    </style>
+    <title>Copilot+ Hub</title>
+</head>
+<body>
+
+    <div class="" style="padding: 20px;">
+        <a href="/" style="margin-left: 10px ;text-decoration: none;font-weight: 500;color: #838080;"><span>Copilot+</span></a>
+    </div>
+
+    <div id="top-right-bar" class="top-right-bar">
+        <!-- <a title="Reset conversation" style="text-decoration: none;color:#838080;" href="/"><i class="fas fa-undo"></i></a> -->
+        <i id="volume-icon" class="fas fa-volume-up"></i>
+    </div>
+
+    <div class="container" style="padding: 20px;max-width: 860px;">
+        <div class="row">
+            {% for copilot in config.copilots %}
+            
+            <div class="col-sm-6" href="{{copilot.url}}">
+                <a href="/chat/{{copilot.id}}">
+                <div class="ctile">
+                    <div class="ctitle">{{copilot.name}}</div><br>
+                    <div class="cdesc">{{copilot.description}}</div>
+                    <div class="cicon">{{copilot.icon}}</div>
+                </div>
+                </a>
+            </div>
+            
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Required Javascript for this tutorial -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        var mode = "{{mode}}";
+        var speechConfig = SpeechSDK.SpeechConfig.fromSubscription("{{config.speech_key}}", "{{config.speech_region}}");
+        speechConfig.speechSynthesisLanguage = "{{config.speech_language}}";
+        speechConfig.speechSynthesisVoiceName = "{{config.speech_voice}}";
+        const player = new SpeechSDK.SpeakerAudioDestination();
+        const audioConfig  = SpeechSDK.AudioConfig.fromSpeakerOutput(player);
+        const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig,audioConfig);
+    </script>
+    <script type="text/javascript" src="static/scripts/showdown.min.js"></script>
+
+
+</body>
+</html>

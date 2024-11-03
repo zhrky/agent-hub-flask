@@ -1,0 +1,193 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required metadata tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Talk with TV Copilot!">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>
+
+    <style>
+        body {
+            background: linear-gradient(0deg, #eedcb5, #eef1fe);
+            background-size: 40% 1400%;
+            font-size: large;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                margin-top: 30px;
+            }
+            to {
+                opacity: 1;
+                margin-top: 20px;
+            }
+        }
+       
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1.0;
+                
+            }
+            50% {
+                opacity: 1;
+                background-color: #f3ffc97a;
+            }
+        }
+
+        .message_assistant {
+            background: #edf5ffa8;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin:20px auto 20px 20px ;
+            max-width: 80%;
+            width: fit-content;
+            animation: fadeIn 1s ease-in, pulse 2s 1 2s;
+        }
+        .message_user {
+            background: #ffd2a780;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin:20px 20px 20px auto;
+            max-width: 80%;
+            width: fit-content;
+            animation: fadeIn 1s ease-in;
+        }
+        .message_assistant:hover,.message_user:hover{
+            box-shadow: 0 0 5px 0px #0000002b;
+            cursor: pointer;
+        }
+
+        .ccard {
+            background: rgba(255, 255, 255, 0.781);
+            color: #007bff;
+            border: #007bff 1px solid;
+            box-shadow: 0 0 5px 0px #0000002b;
+            min-height: 80px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 10px;
+            animation: fadeIn 1s ease-in;
+            cursor: pointer;
+            font-size: medium;
+        }
+        .ccard:hover {
+            background: #0269d6;
+            color: white
+        }
+
+        /* make scrollbar minimal */
+        ::-webkit-scrollbar {
+            width: 7px;
+            background-color: #939393;
+            border-radius: 15px;
+        }
+
+        .form-control:focus {
+            border-color: #63636333;
+            box-shadow: none
+        }
+        
+        .top-right-bar {
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            padding: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0.5;
+            color: #838080;
+        }
+        .top-right-bar>* {
+            margin-left: 10px;
+        }
+    </style>
+    <title>Copilot +</title>
+</head>
+<body>
+
+    <div class="" style="padding: 20px;">
+        <a href="/"><i class="fas fa-chevron-circle-left"></i></a>
+        <a href="/" style="margin-left: 10px ;text-decoration: none;font-weight: 500;color: #838080;"><span>TV Copilot +</span></a>
+    </div>
+
+    <div id="top-right-bar" class="top-right-bar">
+        <!-- <a title="Reset conversation" style="text-decoration: none;color:#838080;" href="/"><i class="fas fa-undo"></i></a> -->
+        <i id="volume-icon" class="fas fa-volume-up"></i>
+    </div>
+
+    <div class="container" style="padding: 20px;">
+        <div class="row">
+            <div id="messages" style="
+                padding: 5px;
+                position: fixed;
+                bottom: 120px;
+                max-width: 800px;
+                margin: auto;
+                top: 70px;
+                overflow-y: auto;
+                right: 20px;
+                left: 20px;
+        ">
+                <div class="message_assistant">
+                    Merhaba, bugün ne tür bir şey izlemek istersin?
+                </div>
+            </div>
+        </div> 
+
+    </div>
+    <div style="position: absolute;bottom: 0px;right: 20px;left: 20px;">
+        <div id="introcards" style="padding: 0px;display: flex;max-width: 700px;margin: auto;">
+            <div class="col ccard">Tom Cruise'un oynadığı komedi filmi var mı?</div>
+            <div class="col ccard">Bahar dizisinin son bölümü bugün müydü?</div>
+            <div class="col ccard">Bu akşam TV'de hangi diziler var?</div>
+        </div>
+        <div class="container" style="
+        margin: 30px auto 30px;
+        padding: 10px 15px;
+        box-shadow: 0px 5px 16px 0px #0000004a;
+        border-radius: 40px;
+        max-width: 700px;
+        background: #ffffff42;">
+            <form>
+                <div class="d-flex">
+                    <input class="form-control" 
+                    style="border-radius: 50px;
+                    padding-left: 20px;
+                    height: 40px;font-size: large;"
+                    id="text-to-send" placeholder="Sorunuzu yazın ya da mikrofon kullanın..." value=""/>           
+                    <button type="submit" class="btn btn-primary" style="border-radius: 20px; margin-left: 10px;width: 42px;display: none;" id="send">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                    <button type="submit" class="btn btn-primary" style="border-radius: 20px; margin-left: 10px;width: 42px;" id="micr">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+            </form>
+        </div>  
+    </div>
+    <!-- Required Javascript for this tutorial -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        var mode = "{{mode}}";
+        var speechConfig = SpeechSDK.SpeechConfig.fromSubscription("{{config.speech_key}}", "{{config.speech_region}}");
+        speechConfig.speechSynthesisLanguage = "{{config.speech_language}}";
+        speechConfig.speechSynthesisVoiceName = "{{config.speech_voice}}";
+        const player = new SpeechSDK.SpeakerAudioDestination();
+        const audioConfig  = SpeechSDK.AudioConfig.fromSpeakerOutput(player);
+        const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig,audioConfig);
+    </script>
+    <script type="text/javascript" src="/static/scripts/main.js"></script>
+    <script type="text/javascript" src="/static/scripts/showdown.min.js"></script>
+
+
+</body>
+</html>
