@@ -1,16 +1,38 @@
+default_agent = {
+         "id": "default",
+         "name": "Generic Copilot",
+         "description": "Ask questions about any thing!",
+         "icon": "💬",
+         "active": False,
+         "initialmessage": "Merhaba, sana nasıl yardımcı olabilirim?",
+         "sampleprompts":[
+            {"prompt": "Saat kaç?"},
+            {"prompt": "Dünyada kaç ülke var?"},
+            {"prompt": "Nasılsın?"}
+            ],
+         "system_prompt": "You are an AI assistant. You can answer questions on any topic. ",
+         "tools": [
+            {
+               "type": "function",
+               "function": {
+                  "name": "get_current_time",
+                  "description": "Get the current time.",
+                  "parameters": {
+                     "type": "object",
+                     "properties": {
+                        "location": {
+                           "type": "string",
+                           "description": "The location to get the current time for.",
+                        }
+                     },
+                     "required": ["location"],
+                  },
+               }
+            }
+         ]
+}
 
-speech_region ="eastus2"
-speech_key= "..."
-speech_language = "tr-TR"
-speech_voice = "tr-TR-EmelNeural"
-openai_endpoint = "https://....openai-sw.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-08-01-preview"
-openai_key = "c1..."
-promptflow_endpoint = "https://......swedencentral.inference.ml.azure.com/score"
-promptflow_deployment = "tv-copilot-3"
-promptflow_key = "bh...."
-
-
-copilots = [
+agents = [
       {
          "id": "carcopilot",
          "name": "Car Copilot",
@@ -23,7 +45,7 @@ copilots = [
             {"prompt": "Aracımın yağını ne zaman değiştirmeliyim?"},
             {"prompt": "Aracımın bakımını kendim yapabilir miyim?"}
             ],
-         "system_prompt": "",
+         "system_prompt": "You help users with car-related questions, such as maintenance, troubleshooting, and more. You can provide information on car parts, repairs, and maintenance schedules. You can also offer tips on how to improve fuel efficiency, extend the life of the vehicle, and ensure safe driving practices.",
          "tools":[
             {
             "type": "function",
@@ -41,7 +63,24 @@ copilots = [
                     "required": ["query"],
                 },
             }
-        }
+        },
+         {
+               "type": "function",
+               "function": {
+                  "name": "getcurrenttime",
+                  "description": "Get the current time.",
+                  "parameters": {
+                     "type": "object",
+                     "properties": {
+                        "location": {
+                           "type": "string",
+                           "description": "The location to get the current time for.",
+                        }
+                     },
+                     "required": ["location"],
+                  },
+               }
+         }
       ]
    },
    {

@@ -131,14 +131,14 @@
 
     <div class="container" style="padding: 20px;max-width: 860px;">
         <div class="row">
-            {% for copilot in config.copilots %}
+            {% for agent in agents %}
             
-            <div class="col-sm-6" href="{{copilot.url}}">
-                <a href="/chat/{{copilot.id}}">
+            <div class="col-sm-6" href="{{agent.url}}">
+                <a href="/chat/{{agent.id}}">
                 <div class="ctile">
-                    <div class="ctitle">{{copilot.name}}</div><br>
-                    <div class="cdesc">{{copilot.description}}</div>
-                    <div class="cicon">{{copilot.icon}}</div>
+                    <div class="ctitle">{{agent.name}}</div><br>
+                    <div class="cdesc">{{agent.description}}</div>
+                    <div class="cicon">{{agent.icon}}</div>
                 </div>
                 </a>
             </div>

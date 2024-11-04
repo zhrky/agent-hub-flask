@@ -113,7 +113,7 @@
 
     <div class="" style="padding: 20px;">
         <a href="/hub"><i class="fas fa-chevron-circle-left"></i></a>
-        <a href="/chat/{{copilot.id}}" style="margin-left: 10px ;text-decoration: none;font-weight: 500;color: #838080;"><span>{{copilot.name}}</span></a>
+        <a href="/chat/{{agent.id}}" style="margin-left: 10px ;text-decoration: none;font-weight: 500;color: #838080;"><span>{{agent.name}}</span></a>
     </div>
 
     <div id="top-right-bar" class="top-right-bar">
@@ -135,7 +135,7 @@
                 left: 20px;
         ">
                 <div class="message_assistant">
-                    {{copilot.initialmessage}}
+                    {{agent.initialmessage}}
                 </div>
             </div>
         </div> 
@@ -143,7 +143,7 @@
     </div>
     <div style="position: absolute;bottom: 0px;right: 20px;left: 20px;">
         <div id="introcards" style="padding: 0px;display: flex;max-width: 700px;margin: auto;">
-            {% for card in copilot.sampleprompts %}
+            {% for card in agent.sampleprompts %}
             <div class="col ccard">{{card.prompt}}</div>
             {% endfor %}
         </div>

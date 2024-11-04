@@ -1,4 +1,4 @@
-import os, azureopenai, config
+import os, azureopenai, config, agents, tools
 from flask import Flask, render_template, session, url_for, jsonify, request, send_from_directory
 
 app = Flask(__name__)
@@ -10,21 +10,22 @@ mysession ={}
 
 @app.route('/hub')
 def intro():
-    return render_template('intro.html', config=config) 
+    return render_template('intro.html', agents=agents.agents) 
 
 @app.route('/chat/<copilotname>')
 def chat(copilotname):
-    copilot = next((x for x in config.copilots if x['id'] == copilotname), None)
+    agent = next((x for x in agents.agents if x['id'] == copilotname), agents.default_agent)
+    mysession['agent'] = agent
     mysession['chathistory'] = [{
         "role": "system",
         "content": [
             {
                 "type": "text",
-                "text": config.system_prompt
+                "text": agents.default_agent['system_prompt']
             }
         ]
     }]
-    return render_template('chat.html', copilot=copilot, config=config) 
+    return render_template('chat.html', agent=agent, config=config) 
 
 @app.route('/')
 def index():
@@ -47,11 +48,12 @@ def index():
         }]
     return render_template('index.html', mode=mode, config=config) 
 
-@app.route('/generate', methods=['POST'])
+@app.route('/generateold', methods=['POST'])
 def generate_response():
-	data = request.get_json()
-	message_input = data['text']
-	mysession['chathistory'].append(
+   
+    data = request.get_json()
+    message_input = data['text']
+    mysession['chathistory'].append(
         {
         "role": "user",
         "content": [
@@ -62,11 +64,45 @@ def generate_response():
         ]
         }
     )
-	response = azureopenai.get_openai_response(mysession['chathistory'])
-	return jsonify(response)
+    response = azureopenai.get_openai_response(mysession['chathistory'])
+    return jsonify(response)
+
+@app.route('/tools/<toolname>', methods=['POST'])
+def call_tools(toolname):
+    data = request.get_json()
+    if toolname == "searchusermanual":
+        response = tools.searchusermanual(data)
+    elif toolname == "searchknowledgebase":
+        response = tools.searchknowledgebase(data)
+    elif toolname == "getweatherforecast":
+        response = tools.getweatherforecast(data)
+    elif toolname == "get_current_time":
+        response = tools.getcurrenttime(data)
+    return response
+
+@app.route('/generate', methods=['POST'])
+def call_openai():
+    print(mysession)
+    agent = mysession['agent']
+    data = request.get_json()
+    message_input = data['text']
+    mysession['chathistory'].append(
+        {
+        "role": "user",
+        "content": [
+            {
+            "type": "text",
+            "text": message_input
+            }
+        ]
+        }
+    )
+    response = azureopenai.get_openai_response(mysession['chathistory'],agent=agent)
+    return jsonify(response)
+
 
 @app.route('/callpromptflow', methods=['POST'])
-def callpromptflow():
+def call_promptflow():
 	data = request.get_json()
 	message_input = data['text']
 	mysession['requestbody']['question'] = message_input
