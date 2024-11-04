@@ -29,6 +29,7 @@ def chat(copilotname):
 
 @app.route('/')
 def index():
+    mysession['agent'] = agents.default_agent
     mode = request.args.get('mode')
     if mode == "promptflow":
         mysession['requestbody'] = {
