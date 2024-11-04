@@ -9,19 +9,6 @@ openai_client = AzureOpenAI(
 
 def get_openai_response(chat_history=[],agent=None):
 
-    headers = {
-        "Content-Type": "application/json",
-        "api-key": config.openai_key,
-    }
-
-    payload = {
-    "messages": chat_history,
-    "temperature": 0.7,
-    "top_p": 0.95,
-    "max_tokens": 800,
-    "tools": agent['tools']
-    }
-
     # Send request
     try:
         response = openai_client.chat.completions.create(
@@ -32,7 +19,8 @@ def get_openai_response(chat_history=[],agent=None):
             )
         
         response_message = response.choices[0].message
-        chat_history.append(response_message)
+        
+        #chat_history.append(response_message)
 
         #response = requests.post(config.openai_endpoint, headers=headers, json=payload)
         

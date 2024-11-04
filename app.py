@@ -67,18 +67,18 @@ def generate_response():
     response = azureopenai.get_openai_response(mysession['chathistory'])
     return jsonify(response)
 
-@app.route('/tools/<toolname>', methods=['POST'])
-def call_tools(toolname):
-    data = request.get_json()
-    if toolname == "searchusermanual":
-        response = tools.searchusermanual(data)
-    elif toolname == "searchknowledgebase":
-        response = tools.searchknowledgebase(data)
-    elif toolname == "getweatherforecast":
-        response = tools.getweatherforecast(data)
-    elif toolname == "get_current_time":
-        response = tools.getcurrenttime(data)
-    return response
+# @app.route('/tools/<toolname>', methods=['POST'])
+# def call_tools(toolname):
+#     data = request.get_json()
+#     if toolname == "searchusermanual":
+#         response = tools.searchusermanual(data)
+#     elif toolname == "searchknowledgebase":
+#         response = tools.searchknowledgebase(data)
+#     elif toolname == "getweatherforecast":
+#         response = tools.getweatherforecast(data)
+#     elif toolname == "get_current_time":
+#         response = tools.getcurrenttime(data)
+#     return response
 
 @app.route('/generate', methods=['POST'])
 def call_openai():
