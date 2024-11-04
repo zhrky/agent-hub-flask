@@ -7,8 +7,19 @@ openai_client = AzureOpenAI(
     api_version="2024-08-01-preview"
 )
 
-def get_openai_response(chat_history=[],agent=None):
+def get_openai_response(usermessage="",chat_history=[],agent={}):
 
+    chat_history.append(
+        {
+        "role": "user",
+        "content": [
+            {
+            "type": "text",
+            "text": usermessage
+            }
+        ]
+        }
+    )
     # Send request
     try:
         response = openai_client.chat.completions.create(
@@ -19,33 +30,40 @@ def get_openai_response(chat_history=[],agent=None):
             )
         
         response_message = response.choices[0].message
+
+        print("response_message: ")
+        print(response_message)
+
+        # chat_history.append({
+        #             "role": response_message.role,
+        #             "content": response_message.content,
+        #             "tool_calls": response_message.tool_calls
+        #         })
         
-        #chat_history.append(response_message)
+        chat_history.append(response_message)
 
         #response = requests.post(config.openai_endpoint, headers=headers, json=payload)
-        
-        print(response.json())
+    
 
         if response_message.tool_calls:
             for tool_call in response_message.tool_calls:
                 function_name = tool_call.function.name
                 function_args = json.loads(tool_call.function.arguments)
-                print(function_args)
                 tool_response = {}
                 if function_name == "searchusermanual":
                     tool_response = tools.searchusermanual(function_args)
                 elif function_name == "searchknowledgebase":
                     tool_response = tools.searchknowledgebase(function_args)
-                elif function_name == "getweatherforecast":
-                    tool_response = tools.getweatherforecast(function_args)
+                elif function_name == "get_current_weather":
+                    tool_response = tools.get_current_weather(function_args)
                 elif function_name == "get_current_time":
-                    tool_response = tools.getcurrenttime(function_args)
+                    tool_response = tools.get_current_datetime(function_args)
                 
                 chat_history.append({
                     "tool_call_id": tool_call.id,
                     "role": "tool",
                     "name": tool_call.function.name,
-                    "content": json.dumps(tool_response),
+                    "content": [{"type": "text","text":json.dumps(tool_response)}],
                 })
                 
                 print("chat_history before tool response:")
@@ -55,10 +73,8 @@ def get_openai_response(chat_history=[],agent=None):
                     model = "gpt-4o",
                     messages = chat_history
                 )
-                print("final response:")
-                print(final_response)
 
-                response_message = final_response.choices[0].message           
+                return (final_response.json())        
 
     except requests.RequestException as e:
         raise SystemExit(f"Failed to make the request. Error: {e}")

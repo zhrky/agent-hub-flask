@@ -67,7 +67,7 @@ agents = [
          {
                "type": "function",
                "function": {
-                  "name": "getcurrenttime",
+                  "name": "get_current_time",
                   "description": "Get the current time.",
                   "parameters": {
                      "type": "object",
@@ -75,6 +75,23 @@ agents = [
                         "location": {
                            "type": "string",
                            "description": "The location to get the current time for.",
+                        }
+                     },
+                     "required": ["location"],
+                  },
+               }
+         },
+         {
+               "type": "function",
+               "function": {
+                  "name": "get_current_weather",
+                  "description": "Get the current weather.",
+                  "parameters": {
+                     "type": "object",
+                     "properties": {
+                        "location": {
+                           "type": "string",
+                           "description": "The location to get the weather for.",
                         }
                      },
                      "required": ["location"],

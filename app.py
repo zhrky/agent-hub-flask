@@ -82,22 +82,10 @@ def generate_response():
 
 @app.route('/generate', methods=['POST'])
 def call_openai():
-    print(mysession)
     agent = mysession['agent']
     data = request.get_json()
     message_input = data['text']
-    mysession['chathistory'].append(
-        {
-        "role": "user",
-        "content": [
-            {
-            "type": "text",
-            "text": message_input
-            }
-        ]
-        }
-    )
-    response = azureopenai.get_openai_response(mysession['chathistory'],agent=agent)
+    response = azureopenai.get_openai_response(usermessage=message_input,chat_history= mysession['chathistory'],agent=agent)
     return jsonify(response)
 
 
