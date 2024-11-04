@@ -1,6 +1,7 @@
-import os, requests, uuid, json, config, tools
+import os, requests, uuid, json, config, tools, azureopenai
 from openai import AzureOpenAI
 
+# Set up the Azure OpenAI client
 openai_client = AzureOpenAI(
     azure_endpoint = config.openai_endpoint, 
     api_key=config.openai_key,  

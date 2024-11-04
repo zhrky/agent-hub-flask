@@ -1,4 +1,5 @@
 import os, azureopenai, config, agents, tools
+import openai
 from flask import Flask, render_template, session, url_for, jsonify, request, send_from_directory
 
 app = Flask(__name__)
