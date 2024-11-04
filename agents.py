@@ -50,7 +50,7 @@ agents = [
             {
             "type": "function",
             "function": {
-                "name": "searchusermanual",
+                "name": "search_user_manual",
                 "description": "Search the user manual for your car.",
                 "parameters": {
                     "type": "object",

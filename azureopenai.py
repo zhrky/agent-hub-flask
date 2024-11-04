@@ -50,10 +50,8 @@ def get_openai_response(usermessage="",chat_history=[],agent={}):
                 function_name = tool_call.function.name
                 function_args = json.loads(tool_call.function.arguments)
                 tool_response = {}
-                if function_name == "searchusermanual":
-                    tool_response = tools.searchusermanual(function_args)
-                elif function_name == "searchknowledgebase":
-                    tool_response = tools.searchknowledgebase(function_args)
+                if function_name == "search_user_manual":
+                    tool_response = tools.search_user_manual(function_args)
                 elif function_name == "get_current_weather":
                     tool_response = tools.get_current_weather(function_args)
                 elif function_name == "get_current_time":

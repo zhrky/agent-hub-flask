@@ -23,3 +23,8 @@ def get_current_weather(data):
     except:
         current_weather = "Data not available. API Error"
     return ({"location": location, "current_weather": current_weather})
+
+def search_user_manual(data):
+    search_term = data["query"]
+    search_results = "API error. User manual connection not available."
+    return ({"search_results": search_results})
