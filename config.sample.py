@@ -9,10 +9,44 @@ promptflow_endpoint = "https://......swedencentral.inference.ml.azure.com/score"
 promptflow_deployment = "tv-copilot-3"
 promptflow_key = "bh...."
 
+
 copilots = [
+      {
+         "id": "carcopilot",
+         "name": "Car Copilot",
+         "description": "Ask questions about cars, maintenance, and more!",
+         "icon": "🚗",
+         "active": False,
+         "initialmessage": "Merhaba, aracınla ilgili bir sorun mu var?",
+         "sampleprompts":[
+            {"prompt": "Aracımın lastiklerini değiştirmem gerekiyor mu?"},
+            {"prompt": "Aracımın yağını ne zaman değiştirmeliyim?"},
+            {"prompt": "Aracımın bakımını kendim yapabilir miyim?"}
+            ],
+         "system_prompt": "",
+         "tools":[
+            {
+            "type": "function",
+            "function": {
+                "name": "searchusermanual",
+                "description": "Search the user manual for your car.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "description": "The search query to find in the user manual.",
+                        },
+                    },
+                    "required": ["query"],
+                },
+            }
+        }
+      ]
+   },
    {
             "id": "tvcopilot",
-            "name": "TV Copilot",
+            "name": "Television Copilot",
             "description": "Ask questions about TV shows, movies, actors, and more!",
             "icon": "📺",
             "active": True,
@@ -32,9 +66,9 @@ copilots = [
                "active": False,
                "initialmessage": "Merhaba, teknik bir sorunun mu var?",
                "sampleprompts":[
-                  {"prompt": "Bilgisayarımın ekranı siyah ekran veriyor, ne yapmalıyım?"},
-                  {"prompt": "Telefonumun şarjı çok hızlı bitiyor, neden olabilir?"},
-                  {"prompt": "Modemim internete bağlanmıyor, ne yapmalıyım?"}
+                  {"prompt": "Aracın tekerlekleri nasıl değiştirilir?"},
+                  {"prompt": "Farlar yanmıyor, ne yapmalıyım?"},
+                  {"prompt": "Cam silecek suyunu nasıl doldurabilirim?"}
                   ],
                "system_prompt": ""
          },
@@ -50,7 +84,11 @@ copilots = [
                   {"prompt": "Fırında tavuk tarifi var mı?"},
                   {"prompt": "Makarna sosu nasıl yapılır?"}
                   ],
-               "system_prompt": ""
+               "system_prompt": "",
+               "tools":[
+                  {"name": "Tarifler", "url": "/functions/recipes"}
+               ]
+               
          },
          {
                "id": "astrologycopilot",
@@ -81,16 +119,16 @@ copilots = [
                "system_prompt": ""
          },
          {
-               "id": "healthcopilot",
-               "name": "Health Copilot",
-               "description": "Ask questions about health, wellness, and more!",
-               "icon": "🏥",
+               "id": "sportcopilot",
+               "name": "Sport Copilot",
+               "description": "Ask questions about sports, teams, and more!",
+               "icon": "⚽",
                "active": False,
-               "initialmessage": "Merhaba, sağlıkla ilgili bir sorunun mu var?",
+               "initialmessage": "Merhaba, hangi spor dalı hakkında bilgi almak istersin?",
                "sampleprompts":[
-                  {"prompt": "Kilo vermek için ne yapmalıyım?"},
-                  {"prompt": "Günlük egzersiz önerisi var mı?"},
-                  {"prompt": "Grip olduğumda ne yapmalıyım?"}
+                  {"prompt": "Fenerbahçe'nin son maç sonucu nedir?"},
+                  {"prompt": "Galatasaray'ın yeni transferi kim?"},
+                  {"prompt": "Basketbolda bu hafta hangi maçlar var?"}
                   ],
                "system_prompt": ""
          },
@@ -98,7 +136,7 @@ copilots = [
                "id": "travelcopilot",
                "name": "Travel Copilot",
                "description": "Ask questions about travel, destinations, and more!",
-               "icon": "✈️",
+               "icon": "🏦",
                "active": False,
                "initialmessage": "Merhaba, nereye seyahat etmek istersin?",
                "sampleprompts":[
@@ -135,21 +173,7 @@ copilots = [
                   {"prompt": "Kripto para yatırımı yapmak istiyorum."}
                   ],
                "system_prompt": ""
-         },
-         {
-               "id": "carcopilot",
-               "name": "Car Copilot",
-               "description": "Ask questions about cars, maintenance, and more!",
-               "icon": "🚗",
-               "active": False,
-               "initialmessage": "Merhaba, aracınla ilgili bir sorun mu var?",
-               "sampleprompts":[
-                  {"prompt": "Aracımın lastiklerini değiştirmem gerekiyor mu?"},
-                  {"prompt": "Aracımın yağını ne zaman değiştirmeliyim?"},
-                  {"prompt": "Aracımın bakımını kendim yapabilir miyim?"}
-                  ],
-               "system_prompt": ""
-         }    
+         }
 ]
 
 system_prompt = """
