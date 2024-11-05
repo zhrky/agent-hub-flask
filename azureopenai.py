@@ -1,4 +1,4 @@
-import os, requests, json, config, tools, azureopenai
+import os, requests, json, config, tools
 from openai import AzureOpenAI
 
 # Set up the Azure OpenAI client
