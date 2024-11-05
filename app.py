@@ -1,4 +1,4 @@
-import os, azureopenai, config, agents, tools
+import os, config, agents, tools, azureopenai
 import openai
 from flask import Flask, render_template, session, url_for, jsonify, request, send_from_directory
 
